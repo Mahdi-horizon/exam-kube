@@ -1,0 +1,8 @@
+container:
+  image: mahdi0188/golang-mathapp
+  port: 8010
+namespace: mohamedmahdimagroum
+service:
+  port: 80
+  targetPort: 8010
+  type: ClusterIP

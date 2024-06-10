@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: golang-deployment-helm
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: golang-helm
+  template:
+    metadata:
+      labels:
+        app: golang-helm
+    spec:
+      containers:
+        - name: golang-helm
+          image: {{ .Values.container.image }}
+          ports:
+            - containerPort: {{ .Values.container.port }}
+          resources:
+            limits:
+              memory: "32Mi"
+              cpu: "10m"
+          volumeMounts:
+            - name: go-pv-storage-helm
+              mountPath: /tmp/data
+      volumes:
+        - name: go-pv-storage-helm
+          persistentVolumeClaim:
+            claimName: go-pv-claim-helm
